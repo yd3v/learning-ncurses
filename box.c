@@ -1,19 +1,19 @@
-
-
 #include <ncurses.h>
+#include <unistd.h>
 
 int main(int argc, char *argv[]) {
-	initscr();
-	WINDOW *win = newwin(20, 40, 0, 3);
+	initscr(); // Init the screen
 
-	refresh();
-	box(win, 0, 0);
+	WINDOW *win = newwin(20, 40, 0, 3); // Create a WINDOW instance
 
-	mvwprintw(win, 0, 5, "Box title");
-	mvwprintw(win, 1, 1, "Box content");
-	mvwprintw(win, 2, 1, "Box content line 2");
+	box(win, 0, 0); // Create the box with default border setup (0, 0)
+	refresh();	// Refresh the Screen
 
-	wrefresh(win);
-	getch();
-	endwin();
+	mvwprintw(win, 0, 5, "Box title");   // Print "Box title", with the y and x offsets (0, 5)
+	mvwprintw(win, 1, 1, "Box content"); // ||
+
+	wrefresh(win);  // Refresh the window
+	getch();	// Only to do a pause
+
+	endwin();	// Kill the screen
 }
