@@ -1,19 +1,32 @@
 #include <ncurses.h>
 #include <unistd.h>
 
+void make_box(WINDOW *win) {
+
+	box(win, 0, 0);
+	refresh();
+	mvwprintw(win, 0, 5, " to_char_code ");   // Print the string with the y and x offsets (0, 5)
+
+}
+
 int main(int argc, char *argv[]) {
 	initscr(); // Init the screen
+	noecho();  // Disable keyboard input stdout
 
-	WINDOW *win = newwin(20, 40, 0, 3); // Create a WINDOW instance
+	WINDOW *win = newwin(10, 60, 0, 3); // Create a WINDOW instance
 
-	box(win, 0, 0); // Create the box with default border setup (0, 0)
-	refresh();	// Refresh the Screen
+	make_box(win);
+	mvwprintw(win, 2, 4, "press a key to get the decimal value"); // ||
+	wrefresh(win);
+	while(1) {
+		wmove(win, 3, 1);
+		wrefresh(win);
 
-	mvwprintw(win, 0, 5, "Box title");   // Print "Box title", with the y and x offsets (0, 5)
-	mvwprintw(win, 1, 1, "Box content"); // ||
+		mvwprintw(win, 4, 4, "result: %d",(int) getch());	// Only to do a pause
+		wclrtoeol(win);
+		make_box(win);
+		wrefresh(win);	// Refresh the Screen
 
-	wrefresh(win);  // Refresh the window
-	getch();	// Only to do a pause
-
-	endwin();	// Kill the screen
+	}
+	endwin();	// Back terminal to normal mode
 }
