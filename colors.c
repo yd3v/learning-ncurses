@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
 
 	if(has_colors() == FALSE) { // Check if the therminal suport colors
 		mvwprintw(win, 2, 2, "your terminal don't suport colors :(");
+		getch();
 		return 1;
 	} else {
 		mvwprintw(win, 3, 2, "great, your terminal support colors !");
@@ -65,18 +66,14 @@ int main(int argc, char *argv[]) {
 
 	move(5, 3);
 	wrefresh(win);
+
 	int y_index = (int)(window_height/2);
-
 	int x_index = (int)(window_width/2)-(int)(strlen(text)/2)-2;
-
 	int ch;
 
 	while(1) {
-
 		ch = getch();
-
-		int randint;
-		randint = (rand() % 21)+1;
+		int randint = (rand() % 21)+1;
 
 		if(y_index == 1 && ch == 65) {
 			y_index = window_height-1;
@@ -84,14 +81,11 @@ int main(int argc, char *argv[]) {
 			y_index = 0;
 		}
 
-
 		if(x_index <= 1 && ch == 68) {
 			x_index = window_width-1;
 		} else if (x_index >= window_width - 1 && ch == 67) {
 			x_index = 0;
 		}
-
-
 
 		switch(ch) {
 			case 65:
@@ -124,7 +118,6 @@ int main(int argc, char *argv[]) {
 		mvwprintw(stats, 5, 25, "%d, %d", x_index, y_index);
 		wattroff(stats, COLOR_PAIR(randint));
 
-//		wmove(win, y_index, x_index);
 		wattron(win, COLOR_PAIR(randint));
 		mvwprintw(win, y_index, x_index, text);
 		wattroff(win, COLOR_PAIR(randint));
