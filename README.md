@@ -1,1 +1,1 @@
-# learning about ncurses lib
+## learning about ncurses lib
