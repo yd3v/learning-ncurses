@@ -1,6 +1,4 @@
 
-
-
 #include <ncurses.h>
 #include <pthread.h>
 #include <unistd.h>
@@ -19,9 +17,8 @@ void *move_thread(void *win) {
 		x_pos = x_pos <= wwidth ? x_pos : 2;
 		x_pos = x_pos < 2 ? wwidth : x_pos;
 
-		y_pos = y_pos <= wheight ? y_pos : 2;
-		y_pos = y_pos < 2 ? wheight : y_pos;
-
+		y_pos = y_pos <= (wheight-2) ? y_pos : 2;
+		y_pos = y_pos < 2 ? wheight-2 : y_pos;
 
 		switch(direction_code) {
 			case 65:
@@ -67,8 +64,10 @@ int main(int argc, char *argv[]) {
 
 
 	while(1) {
-		char direction = getch();
-		direction_code = (int) direction;
+		char direction;
+;		direction = getch();
+
+		direction_code = (int) (direction>=65&&direction<=68)?direction : direction_code;
 	}
 	pthread_join(thread_id, (void *)thread_res);
 
