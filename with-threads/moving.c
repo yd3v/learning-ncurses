@@ -65,9 +65,8 @@ int main(int argc, char *argv[]) {
 
 	while(1) {
 		char direction;
-;		direction = getch();
-
-		direction_code = (int) (direction>=65&&direction<=68)?direction : direction_code;
+		direction = getch();
+		direction_code = (int) ( direction >= 65 && direction<=68 ) ? direction : direction_code;
 	}
 	pthread_join(thread_id, (void *)thread_res);
 
