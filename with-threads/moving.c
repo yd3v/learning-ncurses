@@ -5,8 +5,9 @@
 
 int wwidth = 60, wheight = 27;
 int direction_code = 67;
-
-void *move_thread(void *win) {
+ 
+void* move_thread(void* win) {
+	win = (WINDOW*)win;
 	int x_pos = 2, y_pos = 2;
 	while(1) {
 		box(win, 0, 0);
@@ -46,29 +47,34 @@ void *move_thread(void *win) {
 int main(int argc, char *argv[]) {
 	initscr();
 	noecho();
-	WINDOW *win = newwin(wheight, wwidth, 0, 0);
+	void *win;
+	win = (WINDOW*)newwin(wheight, wwidth, 0, 0);
+	
 	box(win, 0, 0);
 	refresh();
 	wrefresh(win);
-
+	
 	pthread_t thread_id;
-	void *thread_res;
+	
 	int rstatus;
-	rstatus  = pthread_create(&thread_id, NULL, (void *)move_thread, (void *)win); // thread id, null,
+	
+	rstatus  = pthread_create(&thread_id, NULL, &move_thread, win); // thread id, null,
 									// rotina, argumentos
-	if(rstatus) {
-		printw("erro ao criar thread\n");
-		refresh();
-		return 1;
- 	}
+									
+//	if(rstatus) {
+//		printw("erro ao criar thread\n");
+//		refresh();
+//		return 1;
+ //	} 
 
 
 	while(1) {
 		char direction;
 		direction = getch();
+
 		direction_code = (int) ( direction >= 65 && direction<=68 ) ? direction : direction_code;
 	}
-	pthread_join(thread_id, (void *)thread_res);
+
 
 	endwin();
 	return 0;
