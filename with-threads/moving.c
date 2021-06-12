@@ -45,13 +45,13 @@ void* move_thread(void* win) {
 }
 
 int main() {
+	pthread_t thread_id;
+	int rstatus;
+	void *win;
 	initscr();
 	noecho();
 
-	void *win = newwin(wheight, wwidth, 0, 0);
-	pthread_t thread_id;
-	int rstatus;
-	
+	win = newwin(wheight, wwidth, 0, 0);
 	box(win, 0, 0);
 	refresh();
 	wrefresh(win);
