@@ -44,38 +44,24 @@ void* move_thread(void* win) {
 	}
 }
 
-int main(int argc, char *argv[]) {
+int main() {
 	initscr();
 	noecho();
-	void *win;
-	win = (WINDOW*)newwin(wheight, wwidth, 0, 0);
+
+	void *win = newwin(wheight, wwidth, 0, 0);
+	pthread_t thread_id;
+	int rstatus;
 	
 	box(win, 0, 0);
 	refresh();
 	wrefresh(win);
-	
-	pthread_t thread_id;
-	
-	int rstatus;
-	
-	rstatus  = pthread_create(&thread_id, NULL, &move_thread, win); // thread id, null,
-									// rotina, argumentos
-									
-//	if(rstatus) {
-//		printw("erro ao criar thread\n");
-//		refresh();
-//		return 1;
- //	} 
 
-
+	rstatus  = pthread_create(&thread_id, NULL, &move_thread, win); 
 	while(1) {
 		char direction;
 		direction = getch();
-
 		direction_code = (int) ( direction >= 65 && direction<=68 ) ? direction : direction_code;
 	}
-
-
 	endwin();
 	return 0;
 }
